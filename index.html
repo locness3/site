@@ -8,7 +8,18 @@
 	}
 
 	img {
-		max-width: 80%;
+		max-width: 100%;
+		margin: 1em 0;
+	}
+
+	.container {
+		max-width: 800px;
+		margin: 0 auto;
+	}
+
+	.main-header {
+		margin: 5em auto 5em auto;
+		text-align: center;
 	}
 
 	#animated-logo-overlay {
@@ -29,7 +40,16 @@
 	}
 
 	#static-logo {
-		max-width: 712px;
+		display: block;
+		width: 712px;
+		max-width: 100%;
+		margin: 0 auto 3em auto;
+	}
+
+	#video-logo {
+		max-width: 99%;
+	}
+
 	.block-link {
 		display: inline-block;
 		font-weight: bold;
@@ -148,14 +168,14 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<header class="main-header">
+<header class="main-header container">
 	<div id="animated-logo-overlay" style="display: none">
 		<video id="video-logo" src="assets/logos/utendo.mp4" playsinline muted></video>
 	</div>
 
 	<img id="static-logo" src="assets/logos/utendo.png" alt="utendo">
 
-	fans of nintendo doing things for fans of nintendo
+	<p>fans of nintendo doing things for fans of nintendo</p>
 	<ul class="block-links">
 		<li><a class="block-link" href="about.html">more about us</a></li>
 		<li>
