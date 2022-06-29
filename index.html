@@ -7,14 +7,129 @@
 	img {
 		max-width: 80%;
 	}
+
+	#animated-logo-overlay {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		justify-content: center;
+		align-items: center;
+	}
+
+	#alo-background {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: black;
+		transition: opacity 1000ms;
+	}
+
+	#video-logo {
+		position: fixed;
+		transition: left 1000ms ease-out, top 1000ms ease-out;
+	}
+
+	#static-logo {
+		max-width: 712px;
+	}
+
+	/*
+	1. move to position (left/top)
+	   overlay background disappears (opacity)
+	2. static logo appears (opacity)
+	   video logo disappears (opacity)
+	3. overlay hides (display)
+	*/
 </style>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<header class="main-header">
+	<div id="animated-logo-overlay" style="display: none">
+		<div id="alo-background"></div>
+		<video id="video-logo" src="assets/logos/utendo.mp4" playsinline muted></video>
+	</div>
+
+	<img id="static-logo" src="assets/logos/utendo.png" alt="utendo">
+
+	fans of nintendo doing things for fans of nintendo
+</header>
 
 omg cool website!!!
 
 
 <h1>wow cool logos :</h1>
 
-<img src="assets/logos/utendo.png" alt="utendo logo">
 <img src="assets/logos/utendo-wiiu-browser.png" alt="utendo Wii U browser exploit logo">
 <img src="assets/logos/ushop.png" alt="ushop logo">
 <img src="assets/logos/uverse.png" alt="uverse logo">
+
+<img id="static-logo" src="assets/logos/utendo.png" alt="utendo">
+
+<script>
+	// make $id a shorthand for document.getElementById
+	$id = document.getElementById.bind(document);
+
+	// check support for css animations
+	// adapted from https://docs.w3cub.com/css/css_animations/detecting_css_animation_support.html
+	var animation = false;
+	elem = document.createElement('div');
+	//if( elem.style.animationName !== undefined ) { animation = true; }
+	if( elem.style.transition !== undefined ) { animation = true; }
+
+	// get the total left and top offset of el
+	// from https://www.quirksmode.org/js/findpos.html
+	function getPos(el) {
+		var elLeft = 0, elTop = 0;
+		// add the left and top offset of el and all its offsetParents
+		do {
+			elLeft += el.offsetLeft;
+			elTop += el.offsetTop;
+		} while (el = el.offsetParent);
+
+		return [elLeft, elTop];
+	}
+	
+	if (animation == true) {
+		// display the overlay and start the video
+		$id("animated-logo-overlay").style.display = "flex";
+		$id("video-logo").play();
+
+		// when the video is loaded (so it has proper width and height)
+		$id("video-logo").addEventListener("loadeddata", () => {
+			// set the video logo's absolute position to its current automatic position
+			// allowing it to animate to another position later
+			videoLogoPos = getPos($id("video-logo"));
+			$id("video-logo").style.left = videoLogoPos[0] + "px";
+			$id("video-logo").style.top = videoLogoPos[1] + "px";
+		})
+
+		// visually hide the static logo
+		$id("static-logo").style.opacity = 0;
+
+		// when the animation ends, transition to the static logo
+		$id("video-logo").addEventListener("ended", () => {
+			// set the animated logo's absolute position to the automatic position of the static logo
+			// this is animated with css transitions
+			staticLogoPos = getPos($id("static-logo"));
+			$id("video-logo").style.left = staticLogoPos[0] + "px";
+			$id("video-logo").style.top = staticLogoPos[1] + "px";
+
+			// visually hide the overlay background
+			// this is animated with a css transition
+			$id("alo-background").style.opacity = 0;
+
+			// after the css transitions are complete, replace the video logo by the static logo
+			setTimeout(() => {
+				// visually show the static logo
+				$id("static-logo").style.opacity = 1;
+				// hide the overlay
+				$id("animated-logo-overlay").style.display = "none";
+			}, 1000)
+		})
+	}
+</script>
