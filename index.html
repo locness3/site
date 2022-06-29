@@ -27,8 +27,78 @@
 
 	#static-logo {
 		max-width: 712px;
+	.projects {
+		text-align: center;
 	}
 
+	.projects * {
+		text-align: left;
+	}
+
+	.project, .project-twosided {
+		display: inline-block;
+		position: relative;
+		min-width: 200px;
+		max-width: 335px;
+		margin: 15px;
+		perspective: 800px;
+	}
+
+	.project, .project-twosided .face {
+		padding: 15px;
+		color: white;
+		border: 1px solid white;
+		background-color: black;
+		border-radius: 5px;
+	}
+
+	.project.block-link::after {
+		display: block;
+		text-align: right;
+	}
+
+	.project .project-logo {
+		transition: .2s;
+	}
+
+	.project.block-link:hover .project-logo {
+		transform: scale(0.9);
+	}
+
+	/*.project-twosided .face {
+		position: absolute;
+		transition: .5s;
+	}
+
+	.project-twosided .face.back {
+		transform: rotate3d(0, 1, 0, 180deg);
+		opacity: 0;
+	}
+
+	.project-twosided:hover .face.back {
+		transform: none;
+		opacity: 1;
+	}
+
+	.project-twosided:hover .face.front {
+		transform: rotate3d(0, 1, 0, 180deg);
+		opacity: 0;
+	}*/
+
+	.project.uverse {
+		background-color: #008663;
+		border-color: #008663;
+	}
+
+	.project-status {
+		text-transform: uppercase;
+		font-size: .9em;
+		opacity: .9;
+	}
+
+	.project-status em {
+		font-style: normal;
+	}
 </style>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -53,6 +123,32 @@ omg cool website!!!
 <img src="assets/logos/uverse.png" alt="uverse logo">
 
 <img id="static-logo" src="assets/logos/utendo.png" alt="utendo">
+<main class="projects container">
+	<a href="http://uexploit.utendo.me" class="block-link project">
+		<h3><img class="project-logo" src="assets/logos/utendo-wiiu-browser.png" alt="utendo Wii U browser exploit" title="utendo Wii U browser exploit"></h3>
+		<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+	</a>
+	<div class="project">
+		<h3><img class="project-logo" src="assets/logos/ushop.png" alt="ushop" title="ushop"></h3>
+		<p class="project-status"><em>Planned</em></p>
+		<p>A Wii Shop revivial!</p>
+	</div>
+	<div class="project uverse">
+		<h3><img class="project-logo" src="assets/logos/uverse-white.png" alt="uverse" title="uverse"></h3>
+		<p class="project-status"><em>In development</em></p>
+		<p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+	</div>
+	<!--<a href="http://uexploit.utendo.me" class="project-twosided uverse">
+		<div class="block-link face front">
+			<h3><img src="assets/logos/uverse.png" alt="uverse logo"></h3>
+			<p>This is the front face of the card</p>
+		</div>
+		<div class="block-link face back">
+			<h3><img src="assets/logos/uverse.png" alt="uverse logo"></h3>
+			<p>This is the back face of the card</p>
+		</div>
+	</a>-->
+</main>
 
 <script>
 	// make $id a shorthand for document.getElementById
