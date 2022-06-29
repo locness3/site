@@ -94,7 +94,7 @@ omg cool website!!!
 		return [elLeft, elTop];
 	}
 	
-	if (animation == true) {
+	if (animation == true && sessionStorage.getItem("playedAnimatedLogo") < 1) {
 		// display the overlay and start the video
 		$id("animated-logo-overlay").style.display = "flex";
 		$id("video-logo").play();
@@ -130,6 +130,8 @@ omg cool website!!!
 				// hide the overlay
 				$id("animated-logo-overlay").style.display = "none";
 			}, 1000)
+
+			sessionStorage.setItem("playedAnimatedLogo", 1);
 		})
 	}
 </script>
