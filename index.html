@@ -16,16 +16,8 @@
 		height: 100%;
 		justify-content: center;
 		align-items: center;
-	}
-
-	#alo-background {
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
 		background-color: black;
-		transition: opacity 1000ms;
+		transition: background-color 1000ms;
 	}
 
 	#video-logo {
@@ -37,20 +29,12 @@
 		max-width: 712px;
 	}
 
-	/*
-	1. move to position (left/top)
-	   overlay background disappears (opacity)
-	2. static logo appears (opacity)
-	   video logo disappears (opacity)
-	3. overlay hides (display)
-	*/
 </style>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <header class="main-header">
 	<div id="animated-logo-overlay" style="display: none">
-		<div id="alo-background"></div>
 		<video id="video-logo" src="assets/logos/utendo.mp4" playsinline muted></video>
 	</div>
 
@@ -95,9 +79,8 @@ omg cool website!!!
 	}
 	
 	if (animation == true && sessionStorage.getItem("playedAnimatedLogo") < 1) {
-		// display the overlay and start the video
+		// display the overlay
 		$id("animated-logo-overlay").style.display = "flex";
-		$id("video-logo").play();
 
 		// when the video is loaded (so it has proper width and height)
 		$id("video-logo").addEventListener("loadeddata", () => {
@@ -108,30 +91,42 @@ omg cool website!!!
 			$id("video-logo").style.top = videoLogoPos[1] + "px";
 		})
 
-		// visually hide the static logo
-		$id("static-logo").style.opacity = 0;
+		// https://developer.chrome.com/blog/play-returns-promise/
+		var playPromise = $id("video-logo").play();
+		if (playPromise !== undefined) {
+			playPromise.then(() => {
+				// visually hide the static logo
+				$id("static-logo").style.opacity = 0;
+				// set the static lgoo's max width to the width of the video
+				//$id("static-logo").style.maxWidth = "712px";
 
-		// when the animation ends, transition to the static logo
-		$id("video-logo").addEventListener("ended", () => {
-			// set the animated logo's absolute position to the automatic position of the static logo
-			// this is animated with css transitions
-			staticLogoPos = getPos($id("static-logo"));
-			$id("video-logo").style.left = staticLogoPos[0] + "px";
-			$id("video-logo").style.top = staticLogoPos[1] + "px";
+				// when the animation ends, transition to the static logo
+				$id("video-logo").addEventListener("ended", () => {
+					// set the animated logo's absolute position to the automatic position of the static logo
+					// this is animated with css transitions
+					staticLogoPos = getPos($id("static-logo"));
+					$id("video-logo").style.left = staticLogoPos[0] + "px";
+					$id("video-logo").style.top = staticLogoPos[1] + "px";
 
-			// visually hide the overlay background
-			// this is animated with a css transition
-			$id("alo-background").style.opacity = 0;
+					// visually hide the overlay background
+					// this is animated with a css transition
+					$id("animated-logo-overlay").style.backgroundColor = "transparent";
 
-			// after the css transitions are complete, replace the video logo by the static logo
-			setTimeout(() => {
-				// visually show the static logo
-				$id("static-logo").style.opacity = 1;
+					// after the css transitions are complete, replace the video logo by the static logo
+					setTimeout(() => {
+						// visually show the static logo
+						$id("static-logo").style.opacity = 1;
+						// hide the overlay
+						$id("animated-logo-overlay").style.display = "none";
+					}, 1000);
+
+					sessionStorage.setItem("playedAnimatedLogo", 1);
+				})
+			})
+			.catch((e) => {
 				// hide the overlay
 				$id("animated-logo-overlay").style.display = "none";
-			}, 1000)
-
-			sessionStorage.setItem("playedAnimatedLogo", 1);
-		})
+			})
+		}
 	}
 </script>
