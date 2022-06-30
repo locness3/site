@@ -1,0 +1,76 @@
+.projects {
+    text-align: center;
+}
+
+.projects * {
+    text-align: left;
+}
+
+.project, .project-twosided {
+    display: inline-block;
+    position: relative;
+    min-width: 200px;
+    max-width: 335px;
+    margin: 15px;
+    vertical-align: top;
+    perspective: 800px;
+}
+
+.project, .project-twosided .face {
+    padding: 15px;
+    color: white;
+    border: 1px solid white;
+    background-color: black;
+    border-radius: 5px;
+}
+
+.project.block-link::after {
+    display: block;
+    text-align: right;
+}
+
+.project .project-logo {
+    margin-bottom: .3em;
+    transition: .2s;
+}
+
+.project.block-link:hover .project-logo, .project.block-link:focus .project-logo, .project.block-link:active .project-logo {
+    transform: scale(0.9);
+}
+
+// unused : 3d project card that flips over to reveal more information
+// 3d is hard and how do you make it fallback in older browsers
+/*.project-twosided .face {
+    position: absolute;
+    transition: .5s;
+}
+
+.project-twosided .face.back {
+    transform: rotate3d(0, 1, 0, 180deg);
+    opacity: 0;
+}
+
+.project-twosided:hover .face.back {
+    transform: none;
+    opacity: 1;
+}
+
+.project-twosided:hover .face.front {
+    transform: rotate3d(0, 1, 0, 180deg);
+    opacity: 0;
+}*/
+
+.project.uverse {
+    background-color: #008663;
+    border-color: #008663;
+}
+
+.project-status {
+    text-transform: uppercase;
+    font-size: .9em;
+    opacity: .9;
+}
+
+.project-status em {
+    font-style: normal;
+}

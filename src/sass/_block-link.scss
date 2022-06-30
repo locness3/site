@@ -1,0 +1,41 @@
+.block-link {
+    display: inline-block;
+    font-weight: bold;
+    text-decoration: none;
+    color: inherit;
+    transition: .2s;
+}
+
+.block-link:hover, .block-link:focus, .block-link:active {
+    transform: scale(1.1);
+}
+
+.block-link::after {
+    content: "\2192";
+    display: inline-block;
+    margin-left: .5em;
+    /*position: relative;*/
+    transition: .2s;
+}
+
+.block-link:hover::after, .block-link:focus::after, .block-link:active::after {
+    /*left: 10px;*/
+    transform: translateX(10px);
+}
+
+.block-link svg {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: .2em;
+}
+
+.block-links {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.block-links li {
+    display: inline-block;
+    margin: 1em 15px;
+}
